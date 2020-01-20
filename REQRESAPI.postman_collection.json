@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "2ba7da64-6772-4e9f-a8a1-03f444c8a801",
+		"name": "REQRESAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get",
+			"item": [
+				{
+					"name": "Get UserList",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3bfea6db-9e22-421c-93a1-2e4325ead1a7",
+								"exec": [
+									"pm.variables.set(\"url\", \"https://reqres.in\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "257583e3-9076-48b9-9881-a567f0e99e9a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/users?page=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Address Orcon",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e8a93b2b-96b7-4f5a-95c1-de391b3db8eb",
+								"exec": [
+									"pm.variables.set(\"url\", \"https://api.cpg.co.nz/sales/v1.0/qualificational/search/free\");",
+									"//console.log(pm.variables.get(\"url\"));",
+									"//pm.environment.set(\"address\", \"address=2%2F1%20mark\");",
+									"console.log(pm.variables.get(\"address\"));",
+									"//pm.environment.set(\"address\", \"address=2%2F1%20fat\");",
+									"//console.log(pm.variables.get(\"address\"));",
+									"//pm.variables.set(\"address\", \"address=2%2F1%20nan\");",
+									"pm.globals.set(\"address\", \"address=2%2F1%20man\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "80cdbd96-ba3c-4fbd-8c46-97b34660d480",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.environment.get(\"variable_key\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Origin",
+								"value": "https://www.orcon.net.nz"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							}
+						],
+						"url": {
+							"raw": "{{url}}?{{address}}",
+							"host": [
+								"{{url}}"
+							],
+							"query": [
+								{
+									"key": "{{address}}",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Address Orcon (CSV)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{urlCSV}}?{{addressCSV}}",
+							"host": [
+								"{{urlCSV}}"
+							],
+							"query": [
+								{
+									"key": "{{addressCSV}}",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Post UserRegister",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "46f0272e-b789-44bb-b003-f93657f136f1",
+								"exec": [
+									"pm.environment.set(\"endpoint\", \"api/register\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c51ee9d2-a226-4ef3-a51d-bbfaff545572",
+								"exec": [
+									"pm.test(\"Varify Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									"pm.test(\"Varify status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/{{endpoint}}",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"{{endpoint}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "49714c2b-2d1a-4bb2-bdab-c20101430aba",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "51314065-35db-4d2c-8aae-6dec7ecad698",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "779037fb-0659-4ca0-9bf4-64278a35a225",
+			"key": "url",
+			"value": "https://reqres.in",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
